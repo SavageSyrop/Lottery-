@@ -1,0 +1,21 @@
+version: '3.1'
+
+volumes:
+  db-data-lot:
+    driver: local
+
+services:
+  lotdb:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - PGUSER=lotadmin
+      - POSTGRES_USER=lotadmin
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=lotData
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_INITDB_ARGS=--auth-host=trust
+    volumes:
+      - db-data-lot:/var/lib/postgresql/data
