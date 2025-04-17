@@ -25,7 +25,7 @@ public class DrawController {
 
     @PostMapping("/admin/draws")
     @ResponseStatus(HttpStatus.CREATED)
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Draw createDraw(@RequestBody Map<String, String> request) {
         String lotteryType = request.get("lotteryType");
         String startTimeStr = request.get("startTime");
@@ -39,7 +39,7 @@ public class DrawController {
     }
 
     @PutMapping("/admin/draws/{id}/cancel")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public Draw cancelDraw(@PathVariable("id") Long drawId) {
         return drawService.cancelDraw(drawId);
     }

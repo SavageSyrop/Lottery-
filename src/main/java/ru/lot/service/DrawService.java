@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.lot.entity.Draw;
 import ru.lot.entity.DrawResult;
-import ru.lot.entity.DrawStatus;
-import ru.lot.repository.DrawRepository;
-import ru.lot.repository.DrawResultRepository;
+import ru.lot.enums.DrawStatus;
+import ru.lot.dao.DrawRepository;
+import ru.lot.dao.DrawResultRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
