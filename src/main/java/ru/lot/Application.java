@@ -12,7 +12,7 @@ import ru.lot.configuration.FlywayInitializer;
 @Slf4j
 @SpringBootApplication(scanBasePackages = "ru.lot")
 @EnableTransactionManagement
-@EnableJpaRepositories("ru.lot")
+@EnableJpaRepositories("ru.lot.dao")
 public class Application {
     public static void main(String[] args) {
 

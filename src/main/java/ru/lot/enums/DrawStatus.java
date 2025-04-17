@@ -1,4 +1,4 @@
-package ru.lot.entity;
+package ru.lot.enums;
 
 
 public enum DrawStatus {
