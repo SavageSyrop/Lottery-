@@ -1,21 +1,20 @@
-version: '3.1'
-
-volumes:
-  db-data-lot:
-    driver: local
-
+version: '3.8'
 services:
-  lotdb:
-    image: postgres
-    restart: always
+  app:
+    build: .
     ports:
-      - "5432:5432"
+      - "8080:8080"
+    depends_on:
+      - db
     environment:
-      - PGUSER=lotadmin
-      - POSTGRES_USER=lotadmin
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=lotData
-      - POSTGRES_HOST_AUTH_METHOD=trust
-      - POSTGRES_INITDB_ARGS=--auth-host=trust
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/lottery
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: lottery
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - db-data-lot:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
