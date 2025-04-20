@@ -1,9 +1,3 @@
--- Таблица ролей пользователя
-CREATE TABLE user_role (
-    id BIGSERIAL PRIMARY KEY,
-    name TEXT NOT NULL UNIQUE
-);
-
 -- Таблица типов лотерей
 CREATE TABLE lottery_type (
     id BIGSERIAL PRIMARY KEY,
@@ -17,11 +11,10 @@ CREATE TABLE lottery_type (
 -- Таблица пользователей
 CREATE TABLE "user" (
     id BIGSERIAL PRIMARY KEY,
-    username TEXT NOT NULL UNIQUE,
     email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
     balance NUMERIC(10,2),
-    role_id BIGINT NOT NULL REFERENCES user_role(id)
+    "role" TEXT NOT NULL
 );
 
 -- Таблица тиражей

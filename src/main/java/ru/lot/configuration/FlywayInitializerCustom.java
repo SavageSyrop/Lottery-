@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class FlywayInitializer {
+public class FlywayInitializerCustom {
     @Value("${flyway.url}")
     private String url;
     @Value("${flyway.user}")

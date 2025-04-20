@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.lot.configuration.FlywayInitializer;
+import ru.lot.configuration.FlywayInitializerCustom;
 
 @Slf4j
 @SpringBootApplication(scanBasePackages = "ru.lot")
@@ -19,6 +19,6 @@ public class Application {
         log.info("Application stated!");
 
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
-        context.getBean(FlywayInitializer.class).initialize();
+        context.getBean(FlywayInitializerCustom.class).initialize();
     }
 }
