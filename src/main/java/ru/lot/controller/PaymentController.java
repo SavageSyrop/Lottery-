@@ -33,9 +33,9 @@ public class PaymentController {
     @PostMapping("/payments")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('USER')")
-    public PaymentDTO createPayment(@RequestParam Long invoiceId, @RequestParam Long cvc, @RequestParam String cardNumber  ) {
+    public PaymentDTO createPayment(@RequestParam Long invoiceId, @RequestParam Long cvc, @RequestParam String cardNumber, @RequestParam Double amount) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Payment payment = this.paymentService.createPayment(currentUser, invoiceId, cvc, cardNumber);
+        Payment payment = this.paymentService.createPayment(currentUser, invoiceId, cvc, cardNumber, amount);
         PaymentDTO paymentDTO = modelMapper.map(payment, PaymentDTO.class);
         return paymentDTO;
     }

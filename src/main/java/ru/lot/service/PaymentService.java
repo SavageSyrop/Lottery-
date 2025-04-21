@@ -1,4 +1,11 @@
 package ru.lot.service;
 
-public class PaymentService {
+import ru.lot.entity.Invoice;
+import ru.lot.entity.Payment;
+import ru.lot.entity.User;
+
+public interface PaymentService {
+    Payment createPayment(User currentUser, Long invoiceId, Long cvc, String cardNumber, Double amount);
+
+    Invoice createInvoice(User currentUser, Long ticketId);
 }
