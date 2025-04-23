@@ -6,8 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.lot.entity.Draw;
 import ru.lot.entity.DrawResult;
 import ru.lot.enums.DrawStatus;
-import ru.lot.dao.DrawRepository;
-import ru.lot.dao.DrawResultRepository;
+import ru.lot.dao.DrawRepositoryDoa;
+import ru.lot.dao.DrawResultRepositoryDao;
+import ru.lot.enums.LotteryType;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,11 +17,11 @@ import java.util.Optional;
 @Service
 public class DrawService {
 
-    private final DrawRepository drawRepository;
-    private final DrawResultRepository drawResultRepository;
+    private final DrawRepositoryDoa drawRepository;
+    private final DrawResultRepositoryDao drawResultRepository;
 
     @Autowired
-    public DrawService(DrawRepository drawRepository, DrawResultRepository drawResultRepository) {
+    public DrawService(DrawRepositoryDoa drawRepository, DrawResultRepositoryDao drawResultRepository) {
         this.drawRepository = drawRepository;
         this.drawResultRepository = drawResultRepository;
     }
@@ -28,7 +29,7 @@ public class DrawService {
     @Transactional
     public Draw createDraw(String lotteryType, LocalDateTime startTime) {
         Draw draw = new Draw();
-        draw.setLotteryType(lotteryType);
+        draw.setLotteryType(LotteryType.fromLabel(lotteryType));
         draw.setStartTime(startTime);
         draw.setStatus(DrawStatus.PLANNED);
         return drawRepository.save(draw);
