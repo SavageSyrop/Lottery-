@@ -5,11 +5,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import ru.lot.dao.DrawRepository;
-import ru.lot.dao.DrawResultRepository;
+import ru.lot.dao.DrawRepositoryDoa;
+import ru.lot.dao.DrawResultRepositoryDao;
 import ru.lot.entity.Draw;
 import ru.lot.entity.DrawResult;
 import ru.lot.enums.DrawStatus;
+import ru.lot.enums.LotteryType;
+import ru.lot.service.DrawService;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -23,10 +25,10 @@ import static org.mockito.Mockito.*;
 public class DrawServiceTest {
 
     @Mock
-    private DrawRepository drawRepository;
+    private DrawRepositoryDoa drawRepository;
 
     @Mock
-    private DrawResultRepository drawResultRepository;
+    private DrawResultRepositoryDao drawResultRepository;
 
     @InjectMocks
     private DrawService drawService;
@@ -38,13 +40,13 @@ public class DrawServiceTest {
 
     @Test
     public void testCreateDraw() {
-        String lotteryType = "5 из 36";
+        LotteryType lotteryType = LotteryType.FIVE_OUT_OF_36;
         LocalDateTime startTime = LocalDateTime.now().plusDays(1);
         Draw savedDraw = new Draw(1L, lotteryType, startTime, DrawStatus.PLANNED);
 
         when(drawRepository.save(any(Draw.class))).thenReturn(savedDraw);
 
-        Draw result = drawService.createDraw(lotteryType, startTime);
+        Draw result = drawService.createDraw(lotteryType.getLabel(), startTime);
 
         assertNotNull(result);
         assertEquals(1L, result.getId());
@@ -54,8 +56,8 @@ public class DrawServiceTest {
 
     @Test
     public void testGetActiveDraws() {
-        Draw activeDraw1 = new Draw(1L, "5 из 36", LocalDateTime.now().plusHours(1), DrawStatus.ACTIVE);
-        Draw activeDraw2 = new Draw(2L, "6 из 49", LocalDateTime.now().plusHours(2), DrawStatus.ACTIVE);
+        Draw activeDraw1 = new Draw(1L, LotteryType.FIVE_OUT_OF_36, LocalDateTime.now().plusHours(1), DrawStatus.ACTIVE);
+        Draw activeDraw2 = new Draw(2L, LotteryType.SIX_OUT_OF_45, LocalDateTime.now().plusHours(2), DrawStatus.ACTIVE);
         List<Draw> activeDraws = Arrays.asList(activeDraw1, activeDraw2);
         when(drawRepository.findByStatus(DrawStatus.ACTIVE)).thenReturn(activeDraws);
 
@@ -67,7 +69,7 @@ public class DrawServiceTest {
 
     @Test
     public void testCancelDraw_Success() {
-        Draw draw = new Draw(1L, "5 из 36", LocalDateTime.now().plusHours(1), DrawStatus.PLANNED);
+        Draw draw = new Draw(1L, LotteryType.FIVE_OUT_OF_36, LocalDateTime.now().plusHours(1), DrawStatus.PLANNED);
         when(drawRepository.findById(1L)).thenReturn(Optional.of(draw));
         when(drawRepository.save(draw)).thenReturn(draw);
 
@@ -89,7 +91,7 @@ public class DrawServiceTest {
 
     @Test
     public void testGetCompletedDrawHistory() {
-        Draw completedDraw = new Draw(1L, "5 из 36", LocalDateTime.now().minusDays(1), DrawStatus.COMPLETED);
+        Draw completedDraw = new Draw(1L, LotteryType.FIVE_OUT_OF_36, LocalDateTime.now().minusDays(1), DrawStatus.COMPLETED);
         List<Draw> completedDraws = List.of(completedDraw);
         when(drawRepository.findByStatus(DrawStatus.COMPLETED)).thenReturn(completedDraws);
 
@@ -102,7 +104,7 @@ public class DrawServiceTest {
 
     @Test
     public void testGetDrawResult_Success() {
-        Draw draw = new Draw(1L, "5 из 36", LocalDateTime.now().plusHours(1), DrawStatus.COMPLETED);
+        Draw draw = new Draw(1L, LotteryType.FIVE_OUT_OF_36, LocalDateTime.now().plusHours(1), DrawStatus.COMPLETED);
         DrawResult expectedResult = new DrawResult(1L, draw, "1,2,3,4,5", LocalDateTime.now());
         when(drawResultRepository.findByDrawId(1L)).thenReturn(expectedResult);
 

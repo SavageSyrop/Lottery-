@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import ru.lot.converter.LocalDateTimeAttributeConverter;
+import ru.lot.converter.WinningCombinationConverter;
+
 import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
@@ -23,9 +26,11 @@ public class DrawResult extends AbstractEntity<Long> implements Identifiable<Lon
     @JoinColumn(name = "draw_id", referencedColumnName = "id")
     private Draw draw;
 
-    // TODO нужно пометить split-символ куда нибудь в проперти
+    @Convert(converter = WinningCombinationConverter.class)
+    @Column(name = "winning_combination", nullable = false)
     private String winningCombination;
 
-    // TODO аннотация для конвертации в БД
+    @Column(name = "result_time", nullable = false)
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime resultTime;
 }
