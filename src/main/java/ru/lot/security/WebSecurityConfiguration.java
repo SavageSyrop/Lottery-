@@ -82,7 +82,7 @@ public class WebSecurityConfiguration {
                                         }))
                 .authorizeHttpRequests(configurer ->
                         configurer.requestMatchers("/", "/draws/history", "/draws/{id}/results", "/draws/active",
-                                                            "/user/**").permitAll()
+                                        "/user/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(new JWTAuthenticationFilter(authenticationManager(), jwtProperties, jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);

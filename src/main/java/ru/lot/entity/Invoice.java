@@ -17,9 +17,11 @@ import java.time.Instant;
 @ToString
 @NoArgsConstructor
 public class Invoice extends AbstractEntity<Long> implements Identifiable<Long> {
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
+    @Column
+    private String pickedNumbers;
+    @OneToOne
+    @JoinColumn(name = "draw_id", referencedColumnName = "id")
+    private Draw draw;
     @Column
     private Instant registerTime;
     @Enumerated(EnumType.STRING)

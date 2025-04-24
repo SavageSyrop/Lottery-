@@ -7,7 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import ru.lot.converter.LocalDateTimeAttributeConverter;
 import ru.lot.enums.DrawStatus;
-import ru.lot.enums.LotteryType;
 
 import java.time.LocalDateTime;
 
@@ -19,8 +18,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Draw extends AbstractEntity<Long> implements Identifiable<Long> {
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "lottery_type", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lottery_type_id")
     private LotteryType lotteryType;
 
     @Column(name = "start_time", nullable = false)

@@ -2,14 +2,10 @@ package ru.lot.service;
 
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-
-import java.io.StringWriter;
-import java.time.LocalDateTime;
 
 // TODO понять, какие именно письма отсылаться будут
 @Component

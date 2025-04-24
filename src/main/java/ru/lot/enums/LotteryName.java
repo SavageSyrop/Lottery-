@@ -1,12 +1,12 @@
 package ru.lot.enums;
 
-public enum LotteryType {
+public enum LotteryName {
     FIVE_OUT_OF_36("5 из 36"),
     SIX_OUT_OF_45("6 из 45");
 
     private final String label;
 
-    LotteryType(String label) {
+    LotteryName(String label) {
         this.label = label;
     }
 
@@ -19,8 +19,8 @@ public enum LotteryType {
         return label;
     }
 
-    public static LotteryType fromLabel(String label) {
-        for (LotteryType type : values()) {
+    public static LotteryName fromLabel(String label) {
+        for (LotteryName type : values()) {
             if (type.getLabel().equalsIgnoreCase(label)) {
                 return type;
             }

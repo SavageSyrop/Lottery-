@@ -36,18 +36,22 @@ public class PaymentController {
     public PaymentDTO createPayment(@RequestParam Long invoiceId, @RequestParam Long cvc, @RequestParam String cardNumber, @RequestParam Double amount) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Payment payment = this.paymentService.createPayment(currentUser, invoiceId, cvc, cardNumber, amount);
-        PaymentDTO paymentDTO = modelMapper.map(payment, PaymentDTO.class);
-        return paymentDTO;
+        return modelMapper.map(payment, PaymentDTO.class);
     }
 
     @PostMapping("/invoice")
     @ResponseStatus(HttpStatus.CREATED)
     @PreAuthorize("hasAuthority('USER')")
-    public InvoiceDTO createInvoice(@RequestParam Long ticketId) {
+    public InvoiceDTO createInvoice(@RequestBody InvoiceDTO invoiceDTO) {
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Invoice invoice = this.paymentService.createInvoice(currentUser, ticketId);
-        InvoiceDTO invoiceDTO = modelMapper.map(invoice, InvoiceDTO.class);
-        return invoiceDTO;
+        String selectedNumbers = null;
+        if (invoiceDTO.getNumbers().length != 0) {
+            selectedNumbers = String.join(",", invoiceDTO.getNumbers());
+        }
+        Invoice invoice = this.paymentService.createInvoice(currentUser, selectedNumbers, invoiceDTO.getDrawId());
+        InvoiceDTO resultDto = modelMapper.map(invoice, InvoiceDTO.class);
+        resultDto.setNumbers(invoice.getPickedNumbers().split(","));
+        return resultDto;
 
     }
 }

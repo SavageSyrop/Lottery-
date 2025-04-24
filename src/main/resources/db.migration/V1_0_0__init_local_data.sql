@@ -45,7 +45,8 @@ CREATE TABLE ticket (
 -- Таблица инвойсов
 CREATE TABLE invoice (
     id BIGSERIAL PRIMARY KEY,
-    ticket_id BIGINT NOT NULL REFERENCES ticket(id) ON DELETE CASCADE,
+    draw_id BIGINT NOT NULL REFERENCES draw(id) ON DELETE CASCADE,
+    picked_numbers TEXT NOT NULL,
     register_time TIMESTAMPTZ NOT NULL,
     status TEXT NOT NULL CHECK (status IN ('REGISTERED', 'CANCELLED'))
 );

@@ -11,7 +11,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.lot.enums.RoleType;
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,7 +25,7 @@ public class User extends AbstractEntity<Long> implements UserDetails, Identifia
 
     @Column
     private String email;
-    @Column(name="password_hash")
+    @Column(name = "password_hash")
     private String password;
     @Enumerated(EnumType.STRING)
     @Column
