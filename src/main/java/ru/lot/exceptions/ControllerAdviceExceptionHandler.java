@@ -5,6 +5,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -13,6 +14,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import ru.lot.service.MailService;
 
 import java.util.stream.Collectors;
 
@@ -20,10 +22,18 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class ControllerAdviceExceptionHandler {
 
+    private MailService mailService;
+
+    @Autowired
+    public ControllerAdviceExceptionHandler(MailService mailService) {
+        this.mailService = mailService;
+    }
+
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ExceptionBody handleDataIntegrityViolation(DataIntegrityViolationException e) {
         log.warn(e.toString());
+        mailService.sendAdminError(e);
         return new ExceptionBody(e.getMessage());
     }
 
@@ -31,6 +41,7 @@ public class ControllerAdviceExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionBody handleResourceNotFound(EntityNotFoundException e) {
         log.warn(e.toString());
+        mailService.sendAdminError(e);
         return new ExceptionBody(e.getMessage());
     }
 
@@ -38,6 +49,7 @@ public class ControllerAdviceExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionBody handleIllegalState(IllegalStateException e) {
         log.warn(e.toString());
+        mailService.sendAdminError(e);
         return new ExceptionBody(e.getMessage());
     }
 
@@ -45,6 +57,7 @@ public class ControllerAdviceExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ExceptionBody handleAccessDenied(RuntimeException e) {
         log.warn(e.toString());
+        mailService.sendAdminError(e);
         return new ExceptionBody(e.getMessage());
     }
 
@@ -52,6 +65,7 @@ public class ControllerAdviceExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionBody handleConstraintViolation(ConstraintViolationException e) {
         log.warn(e.toString());
+        mailService.sendAdminError(e);
         ExceptionBody exceptionBody = new ExceptionBody("Validation failed");
         exceptionBody.setErrors(e.getConstraintViolations().stream().collect(Collectors.toMap(violation -> violation.getPropertyPath().toString(), ConstraintViolation::getMessage)));
         return exceptionBody;
@@ -61,6 +75,7 @@ public class ControllerAdviceExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ExceptionBody handleAuthentication(RuntimeException e) {
         log.warn(e.toString());
+        mailService.sendAdminError(e);
         return new ExceptionBody(e.getMessage());
     }
 
@@ -68,6 +83,7 @@ public class ControllerAdviceExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ExceptionBody handleException(Exception e) {
         log.warn(e.toString());
+        mailService.sendAdminError(e);
         return new ExceptionBody("Internal error: " + e.getMessage());
     }
 }

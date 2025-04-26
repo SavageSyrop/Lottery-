@@ -20,13 +20,16 @@ public class DrawResultService {
 
     private TicketDao ticketRepository;
 
+    private MailService mailService;
+
     @Value("{draw_result_service.secure_random.algorithm}")
     private String secureRandomAlgorithm = "NativePRNG";
 
     @Autowired
-    public DrawResultService(TicketDao ticketRepository) throws NoSuchAlgorithmException {
+    public DrawResultService(TicketDao ticketRepository, MailService mailService) throws NoSuchAlgorithmException {
         this.secureRandom = SecureRandom.getInstance(secureRandomAlgorithm);
         this.ticketRepository = ticketRepository;
+        this.mailService = mailService;
     }
 
     public boolean isCombinationWinning(String combination, String winningCombination) {
@@ -84,13 +87,15 @@ public class DrawResultService {
             String winningCombination
     ) {
         List<Ticket> tickets = ticketRepository.findByDrawId(drawId);
-        tickets.forEach(ticket -> {
+        for (Ticket ticket : tickets) {
             if (isCombinationWinning(ticket.getPickedNumbers(), winningCombination)) {
                 ticket.setStatus(TicketStatus.WIN);
+                mailService.sendWinnerLetter(ticket);
             } else {
                 ticket.setStatus(TicketStatus.LOSE);
+                mailService.sendDrawResult(winningCombination, ticket);
             }
-        });
+        }
         ticketRepository.saveAll(tickets);
     }
 }
