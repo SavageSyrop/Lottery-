@@ -69,5 +69,9 @@ public class DrawService {
         }
         return result;
     }
+
+    public Optional<Draw> getDrawById(Long drawId) {
+        return drawRepository.findById(drawId);
+    }
 }
 
