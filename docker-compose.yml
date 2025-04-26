@@ -3,16 +3,19 @@ services:
   app:
     build: .
     ports:
-      - "8080:8080"
+      - "8089:8089"
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/lottery
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/lotData
+      FLYWAY_URL: jdbc:postgresql://db:5432/lotData
   db:
-    image: postgres:15
+    image: postgres
+    ports:
+      - "5432:5432"
     environment:
-      POSTGRES_DB: lottery
-      POSTGRES_USER: postgres
+      POSTGRES_DB: lotData
+      POSTGRES_USER: lotadmin
       POSTGRES_PASSWORD: postgres
     volumes:
       - postgres_data:/var/lib/postgresql/data

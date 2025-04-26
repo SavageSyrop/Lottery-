@@ -3,11 +3,14 @@ package ru.lot.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.lot.dao.DrawDao;
+import ru.lot.dao.DrawResultRepositoryDao;
+import ru.lot.dao.LotteryTypeDao;
 import ru.lot.entity.Draw;
 import ru.lot.entity.DrawResult;
+import ru.lot.entity.LotteryType;
 import ru.lot.enums.DrawStatus;
-import ru.lot.dao.DrawRepository;
-import ru.lot.dao.DrawResultRepository;
+import ru.lot.enums.LotteryName;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,17 +19,21 @@ import java.util.Optional;
 @Service
 public class DrawService {
 
-    private final DrawRepository drawRepository;
-    private final DrawResultRepository drawResultRepository;
+    private final DrawDao drawRepository;
+    private final DrawResultRepositoryDao drawResultRepository;
+    private final LotteryTypeDao lotteryTypeDao;
 
     @Autowired
-    public DrawService(DrawRepository drawRepository, DrawResultRepository drawResultRepository) {
+    public DrawService(DrawDao drawRepository, DrawResultRepositoryDao drawResultRepository, LotteryTypeDao lotteryTypeDao) {
         this.drawRepository = drawRepository;
         this.drawResultRepository = drawResultRepository;
+        this.lotteryTypeDao = lotteryTypeDao;
     }
 
     @Transactional
-    public Draw createDraw(String lotteryType, LocalDateTime startTime) {
+    public Draw createDraw(String lottery, LocalDateTime startTime) {
+        LotteryName lotteryName = LotteryName.fromLabel(lottery);
+        LotteryType lotteryType = lotteryTypeDao.findByName(lotteryName).orElseThrow();
         Draw draw = new Draw();
         draw.setLotteryType(lotteryType);
         draw.setStartTime(startTime);

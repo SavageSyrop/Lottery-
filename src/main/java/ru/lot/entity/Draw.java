@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import ru.lot.converter.LocalDateTimeAttributeConverter;
 import ru.lot.enums.DrawStatus;
 
 import java.time.LocalDateTime;
@@ -17,17 +18,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Draw extends AbstractEntity<Long> implements Identifiable<Long> {
 
-    // TODO возможно придется переделать в енум
-    private String lotteryType;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lottery_type_id")
+    private LotteryType lotteryType;
 
-    // TODO аннотация для конвертации в БД
+    @Column(name = "start_time", nullable = false)
+    @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime startTime;
 
     @Column
     @Enumerated(EnumType.STRING)
     private DrawStatus status;
 
-    public Draw(long id, String lotteryType, LocalDateTime startTime, DrawStatus drawStatus) {
+    public Draw(long id, LotteryType lotteryType, LocalDateTime startTime, DrawStatus drawStatus) {
         this.id = id;
         this.lotteryType = lotteryType;
         this.startTime = startTime;
