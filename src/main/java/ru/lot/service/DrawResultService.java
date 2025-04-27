@@ -22,8 +22,7 @@ public class DrawResultService {
 
     private MailService mailService;
 
-    @Value("{draw_result_service.secure_random.algorithm}")
-    private String secureRandomAlgorithm = "NativePRNG";
+    private String secureRandomAlgorithm = "SHA1PRNG";
 
     @Autowired
     public DrawResultService(TicketDao ticketRepository, MailService mailService) {
