@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Service
 public class TicketService {
     private final TicketDao ticketRepository;
     private final DrawService drawService;
