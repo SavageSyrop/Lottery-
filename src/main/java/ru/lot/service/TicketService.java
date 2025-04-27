@@ -2,6 +2,8 @@ package ru.lot.service;
 
 import java.util.List;
 
+import lombok.Setter;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.lot.converter.TicketConverter;
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RequiredArgsConstructor
+@Service
 public class TicketService {
     private final TicketDao ticketRepository;
     private final DrawService drawService;
