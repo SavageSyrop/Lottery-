@@ -12,6 +12,7 @@ import ru.lot.entity.Draw;
 import ru.lot.entity.DrawResult;
 import ru.lot.entity.LotteryType;
 import ru.lot.enums.DrawStatus;
+import ru.lot.enums.LotteryName;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -38,6 +39,16 @@ public class DrawServiceTest {
     @InjectMocks
     private DrawService drawService;
 
+    @Mock
+    private DrawTaskSchedulerService drawTaskSchedulerService;
+
+    @Mock
+    private TicketService ticketService;
+
+    @Mock
+    private DrawResultService drawResultService;
+
+
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
@@ -49,9 +60,17 @@ public class DrawServiceTest {
 
     @Test
     public void testCreateDraw() {
-        LotteryType lotteryType = lotteryTypeDao.findByName(FIVE_OUT_OF_36).orElseThrow();
+        LotteryType lotteryType = new LotteryType();
+        lotteryType.setName(FIVE_OUT_OF_36);
+
+        when(lotteryTypeDao.findByName(FIVE_OUT_OF_36)).thenReturn(Optional.of(lotteryType));
+
         LocalDateTime startTime = LocalDateTime.now().plusDays(1);
-        Draw savedDraw = new Draw(1L, lotteryType, startTime, DrawStatus.PLANNED);
+        Draw savedDraw = new Draw();
+        savedDraw.setId(1L);
+        savedDraw.setLotteryType(lotteryType);
+        savedDraw.setStartTime(startTime);
+        savedDraw.setStatus(DrawStatus.PLANNED);
 
         when(drawRepository.save(any(Draw.class))).thenReturn(savedDraw);
 
@@ -60,7 +79,9 @@ public class DrawServiceTest {
         assertNotNull(result);
         assertEquals(1L, result.getId());
         assertEquals(DrawStatus.PLANNED, result.getStatus());
+
         verify(drawRepository, times(1)).save(any(Draw.class));
+        verify(drawTaskSchedulerService, times(1)).scheduleDrawTasks(any(Draw.class));
     }
 
     @Test
@@ -82,6 +103,7 @@ public class DrawServiceTest {
     public void testCancelDraw_Success() {
         LotteryType lotteryOne = lotteryTypeDao.findByName(FIVE_OUT_OF_36).orElseThrow();
         Draw draw = new Draw(1L, lotteryOne, LocalDateTime.now().plusHours(1), DrawStatus.PLANNED);
+
         when(drawRepository.findById(1L)).thenReturn(Optional.of(draw));
         when(drawRepository.save(draw)).thenReturn(draw);
 
@@ -90,7 +112,9 @@ public class DrawServiceTest {
         assertEquals(DrawStatus.CANCELLED, cancelledDraw.getStatus());
         verify(drawRepository, times(1)).findById(1L);
         verify(drawRepository, times(1)).save(draw);
+        verify(ticketService, times(1)).cancelTicketsForDraw(1L); // ✅ Проверка вызова отмены билетов
     }
+
 
     @Test
     public void testCancelDraw_NotFound() {
@@ -137,4 +161,26 @@ public class DrawServiceTest {
         assertEquals("Результат для тиража не найден", exception.getMessage());
         verify(drawResultRepository, times(1)).findByDrawId(1L);
     }
+
+    @Test
+    public void testUpdateStatus_ToCompleted() {
+        LotteryType lotteryType = lotteryTypeDao.findByName(FIVE_OUT_OF_36).orElseThrow();
+        Draw draw = new Draw(1L, lotteryType, LocalDateTime.now(), DrawStatus.ACTIVE);
+
+        when(drawRepository.findById(1L)).thenReturn(Optional.of(draw));
+        when(drawRepository.save(any(Draw.class))).thenReturn(draw);
+
+        int[] winningCombination = {1, 2, 3, 4, 5};
+        when(drawResultService.getWinningCombination(any(LotteryName.class))).thenReturn(winningCombination);
+        when(drawResultService.winningCombinationToString(any(), eq(","))).thenReturn("1,2,3,4,5");
+
+        drawService.updateStatus(1L, DrawStatus.COMPLETED);
+
+        verify(drawRepository, times(1)).save(draw);
+        verify(drawResultService, times(1)).getWinningCombination(any(LotteryName.class));
+        verify(drawResultService, times(1)).winningCombinationToString(any(), eq(","));
+        verify(drawResultRepository, times(1)).save(any(DrawResult.class));
+        verify(drawResultService, times(1)).markTicketsWinOrLose(eq(1L), eq("1,2,3,4,5"));
+    }
+
 }

@@ -2,6 +2,7 @@ package ru.lot.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ru.lot.converter.TicketConverter;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Service
 @RequiredArgsConstructor
 public class TicketService {
     private final TicketDao ticketRepository;
@@ -68,6 +70,19 @@ public class TicketService {
             throw e;
         }
     }
+
+    @Transactional
+    public void cancelTicketsForDraw(Long drawId) {
+        List<Ticket> tickets = ticketRepository.findByDrawId(drawId);
+
+        for (Ticket ticket : tickets) {
+            ticket.setStatus(TicketStatus.LOSE);
+        }
+
+        ticketRepository.saveAll(tickets);
+        log.info("Отменено {} билетов для тиража {}", tickets.size(), drawId);
+    }
+
 
     private void validateNumbers(List<Integer> numbers, LotteryName lotteryType) {
         log.debug("Validating numbers for lottery type: {}", lotteryType);
