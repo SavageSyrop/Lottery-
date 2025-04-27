@@ -36,7 +36,6 @@ public class DrawTaskSchedulerService {
         scheduleEndTask(draw);
     }
 
-    @EventListener(ApplicationReadyEvent.class)
     public void init() {
         var now = LocalDateTime.now();
         List<Draw> draws = drawDao.findByStatus(DrawStatus.PLANNED);
