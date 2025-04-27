@@ -9,6 +9,7 @@ import ru.lot.converter.LocalDateTimeAttributeConverter;
 import ru.lot.converter.WinningCombinationConverter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -26,7 +27,6 @@ public class DrawResult extends AbstractEntity<Long> implements Identifiable<Lon
     @JoinColumn(name = "draw_id", referencedColumnName = "id")
     private Draw draw;
 
-    @Convert(converter = WinningCombinationConverter.class)
     @Column(name = "winning_combination", nullable = false)
     private String winningCombination;
 
