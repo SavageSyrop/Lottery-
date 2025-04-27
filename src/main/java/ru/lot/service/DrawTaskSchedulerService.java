@@ -2,10 +2,14 @@ package ru.lot.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.stereotype.Service;
 import ru.lot.entity.Draw;
-import ru.lot.enums.DrawStatus;
+import ru.lot.event.DrawCreatedEvent;
+import ru.lot.event.DrawEndedEvent;
+import ru.lot.event.DrawStartedEvent;
 
 import java.time.ZoneId;
 import java.util.Date;
@@ -16,9 +20,12 @@ import java.util.Date;
 public class DrawTaskSchedulerService {
 
     private final ThreadPoolTaskScheduler taskScheduler;
-    private final DrawService drawService;
+    private final ApplicationEventPublisher eventPublisher; // теперь здесь EventPublisher
 
-    public void scheduleDrawTasks(Draw draw) {
+    @EventListener
+    public void handleDrawCreated(DrawCreatedEvent event) {
+        Draw draw = event.getDraw();
+        log.info("Received DrawCreatedEvent for draw id {}", draw.getId());
         scheduleStartTask(draw);
         scheduleEndTask(draw);
     }
@@ -27,7 +34,7 @@ public class DrawTaskSchedulerService {
         Date startDate = Date.from(draw.getStartTime().atZone(ZoneId.systemDefault()).toInstant());
         taskScheduler.schedule(() -> {
             log.info("Тираж {} стартует!", draw.getId());
-            drawService.updateStatus(draw.getId(), DrawStatus.ACTIVE);
+            eventPublisher.publishEvent(new DrawStartedEvent(draw.getId()));
         }, startDate);
     }
 
@@ -35,7 +42,8 @@ public class DrawTaskSchedulerService {
         Date endDate = Date.from(draw.getEndTime().atZone(ZoneId.systemDefault()).toInstant());
         taskScheduler.schedule(() -> {
             log.info("Тираж {} завершается!", draw.getId());
-            drawService.updateStatus(draw.getId(), DrawStatus.COMPLETED);
+            eventPublisher.publishEvent(new DrawEndedEvent(draw.getId()));
         }, endDate);
     }
 }
+
