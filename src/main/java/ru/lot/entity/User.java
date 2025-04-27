@@ -35,12 +35,12 @@ public class User extends AbstractEntity<Long> implements UserDetails, Identifia
 
     @Override
     public void setId(Long index) {
-        setId(index);
+        this.id = index;
     }
 
     @Override
     public Long getId() {
-        return getId();
+        return id;
     }
 
     @Override

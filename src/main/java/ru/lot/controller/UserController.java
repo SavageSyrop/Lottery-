@@ -53,6 +53,7 @@ public class UserController {
         user.setPassword(Hashing.sha256()
                 .hashString(registrationDTO.getPassword(), StandardCharsets.UTF_8)
                 .toString());
+        user.setBalance(0d);
         user = userService.saveNewUser(user);
         log.info("Registered  {} : {}", user.getId(), registrationDTO.getEmail());
     }

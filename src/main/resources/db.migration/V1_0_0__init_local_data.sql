@@ -9,7 +9,7 @@ CREATE TABLE lottery_type (
 );
 
 -- Таблица пользователей
-CREATE TABLE "user" (
+CREATE TABLE "users" (
     id BIGSERIAL PRIMARY KEY,
     email TEXT NOT NULL UNIQUE,
     password_hash TEXT NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE draw_result (
 -- Таблица билетов
 CREATE TABLE ticket (
     id BIGSERIAL PRIMARY KEY,
-    user_id BIGINT NOT NULL REFERENCES "user"(id) ON DELETE CASCADE,
+    user_id BIGINT NOT NULL REFERENCES "users"(id) ON DELETE CASCADE,
     draw_id BIGINT NOT NULL REFERENCES draw(id) ON DELETE CASCADE,
     picked_numbers TEXT NOT NULL,
     status TEXT NOT NULL DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'WIN', 'LOSE'))

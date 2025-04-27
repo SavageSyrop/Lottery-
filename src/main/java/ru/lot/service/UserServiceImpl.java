@@ -42,9 +42,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveNewUser(User user) throws Exception {
-        userDao.save(user);
-        return user;
+    public User saveNewUser(User user) {
+        return userDao.save(user);
     }
 
     @Override

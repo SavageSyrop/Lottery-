@@ -32,6 +32,7 @@ public class ControllerAdviceExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ExceptionBody handleDataIntegrityViolation(DataIntegrityViolationException e) {
+        e.printStackTrace();
         log.warn(e.toString());
         mailService.sendAdminError(e);
         return new ExceptionBody(e.getMessage());
@@ -40,6 +41,7 @@ public class ControllerAdviceExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ExceptionBody handleResourceNotFound(EntityNotFoundException e) {
+        e.printStackTrace();
         log.warn(e.toString());
         mailService.sendAdminError(e);
         return new ExceptionBody(e.getMessage());
@@ -48,6 +50,7 @@ public class ControllerAdviceExceptionHandler {
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionBody handleIllegalState(IllegalStateException e) {
+        e.printStackTrace();
         log.warn(e.toString());
         mailService.sendAdminError(e);
         return new ExceptionBody(e.getMessage());
@@ -56,6 +59,7 @@ public class ControllerAdviceExceptionHandler {
     @ExceptionHandler({AccessDeniedException.class, ExpiredJwtException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ExceptionBody handleAccessDenied(RuntimeException e) {
+        e.printStackTrace();
         log.warn(e.toString());
         mailService.sendAdminError(e);
         return new ExceptionBody(e.getMessage());
@@ -64,6 +68,7 @@ public class ControllerAdviceExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ExceptionBody handleConstraintViolation(ConstraintViolationException e) {
+        e.printStackTrace();
         log.warn(e.toString());
         mailService.sendAdminError(e);
         ExceptionBody exceptionBody = new ExceptionBody("Validation failed");
@@ -74,6 +79,7 @@ public class ControllerAdviceExceptionHandler {
     @ExceptionHandler(value = {AuthenticationException.class, AuthorizationServiceException.class})
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ExceptionBody handleAuthentication(RuntimeException e) {
+        e.printStackTrace();
         log.warn(e.toString());
         mailService.sendAdminError(e);
         return new ExceptionBody(e.getMessage());
@@ -82,6 +88,7 @@ public class ControllerAdviceExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ExceptionBody handleException(Exception e) {
+        e.printStackTrace();
         log.warn(e.toString());
         mailService.sendAdminError(e);
         return new ExceptionBody("Internal error: " + e.getMessage());
