@@ -25,8 +25,8 @@ public class DrawResultService {
     private String secureRandomAlgorithm = "SHA1PRNG";
 
     @Autowired
-    public DrawResultService(TicketDao ticketRepository, MailService mailService) throws NoSuchAlgorithmException {
-        this.secureRandom = SecureRandom.getInstance(secureRandomAlgorithm);
+    public DrawResultService(TicketDao ticketRepository, MailService mailService) {
+        this.secureRandom = new SecureRandom();
         this.ticketRepository = ticketRepository;
         this.mailService = mailService;
     }

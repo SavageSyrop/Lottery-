@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "draw_results")
+@Table(name = "draw_result")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -33,4 +33,11 @@ public class DrawResult extends AbstractEntity<Long> implements Identifiable<Lon
     @Column(name = "result_time", nullable = false)
     @Convert(converter = LocalDateTimeAttributeConverter.class)
     private LocalDateTime resultTime;
+
+    public DrawResult(Draw draw, String winningCombination, LocalDateTime resultTime) {
+        this.draw = draw;
+        this.winningCombination = winningCombination;
+        this.resultTime = resultTime;
+    }
+
 }

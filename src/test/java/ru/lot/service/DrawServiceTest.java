@@ -5,13 +5,18 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.context.ApplicationEventPublisher;
 import ru.lot.dao.DrawDao;
 import ru.lot.dao.DrawResultRepositoryDao;
 import ru.lot.dao.LotteryTypeDao;
+import ru.lot.dao.TicketDao;
 import ru.lot.entity.Draw;
 import ru.lot.entity.DrawResult;
 import ru.lot.entity.LotteryType;
+import ru.lot.entity.Ticket;
 import ru.lot.enums.DrawStatus;
+import ru.lot.enums.LotteryName;
+import ru.lot.enums.TicketStatus;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -35,6 +40,15 @@ public class DrawServiceTest {
     @Mock
     private LotteryTypeDao lotteryTypeDao;
 
+    @Mock
+    private DrawResultService drawResultService;
+
+    @Mock
+    private TicketDao ticketRepository;
+
+    @Mock
+    private ApplicationEventPublisher eventPublisher;
+
     @InjectMocks
     private DrawService drawService;
 
@@ -49,9 +63,17 @@ public class DrawServiceTest {
 
     @Test
     public void testCreateDraw() {
-        LotteryType lotteryType = lotteryTypeDao.findByName(FIVE_OUT_OF_36).orElseThrow();
+        LotteryType lotteryType = new LotteryType();
+        lotteryType.setName(FIVE_OUT_OF_36);
+
+        when(lotteryTypeDao.findByName(FIVE_OUT_OF_36)).thenReturn(Optional.of(lotteryType));
+
         LocalDateTime startTime = LocalDateTime.now().plusDays(1);
-        Draw savedDraw = new Draw(1L, lotteryType, startTime, DrawStatus.PLANNED);
+        Draw savedDraw = new Draw();
+        savedDraw.setId(1L);
+        savedDraw.setLotteryType(lotteryType);
+        savedDraw.setStartTime(startTime);
+        savedDraw.setStatus(DrawStatus.PLANNED);
 
         when(drawRepository.save(any(Draw.class))).thenReturn(savedDraw);
 
@@ -60,6 +82,7 @@ public class DrawServiceTest {
         assertNotNull(result);
         assertEquals(1L, result.getId());
         assertEquals(DrawStatus.PLANNED, result.getStatus());
+
         verify(drawRepository, times(1)).save(any(Draw.class));
     }
 
@@ -82,6 +105,7 @@ public class DrawServiceTest {
     public void testCancelDraw_Success() {
         LotteryType lotteryOne = lotteryTypeDao.findByName(FIVE_OUT_OF_36).orElseThrow();
         Draw draw = new Draw(1L, lotteryOne, LocalDateTime.now().plusHours(1), DrawStatus.PLANNED);
+
         when(drawRepository.findById(1L)).thenReturn(Optional.of(draw));
         when(drawRepository.save(draw)).thenReturn(draw);
 
@@ -90,6 +114,8 @@ public class DrawServiceTest {
         assertEquals(DrawStatus.CANCELLED, cancelledDraw.getStatus());
         verify(drawRepository, times(1)).findById(1L);
         verify(drawRepository, times(1)).save(draw);
+        verify(ticketRepository, times(1)).findByDrawId(1L);
+        verify(ticketRepository, times(1)).saveAll(anyList());
     }
 
     @Test
@@ -136,5 +162,21 @@ public class DrawServiceTest {
         Exception exception = assertThrows(RuntimeException.class, () -> drawService.getDrawResult(1L));
         assertEquals("Результат для тиража не найден", exception.getMessage());
         verify(drawResultRepository, times(1)).findByDrawId(1L);
+    }
+
+    @Test
+    public void testCancelTicketsForDraw() {
+        Ticket ticket1 = new Ticket();
+        Ticket ticket2 = new Ticket();
+        List<Ticket> tickets = Arrays.asList(ticket1, ticket2);
+
+        when(ticketRepository.findByDrawId(1L)).thenReturn(tickets);
+
+        drawService.cancelTicketsForDraw(1L);
+
+        assertEquals(TicketStatus.LOSE, ticket1.getStatus());
+        assertEquals(TicketStatus.LOSE, ticket2.getStatus());
+        verify(ticketRepository, times(1)).findByDrawId(1L);
+        verify(ticketRepository, times(1)).saveAll(tickets);
     }
 }
