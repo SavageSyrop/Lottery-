@@ -17,7 +17,6 @@ public class FlywayInitializerCustom {
     @Value("${flyway.password}")
     private String password;
 
-    // Внедряем ваш сервис, который умеет стартовать задачи
     private final DrawTaskSchedulerService scheduler;
 
     public FlywayInitializerCustom(DrawTaskSchedulerService scheduler) {
@@ -25,7 +24,6 @@ public class FlywayInitializerCustom {
     }
 
     public void initialize() {
-        // Сначала прогоняем миграции
         Flyway.configure()
                 .dataSource(url, username, password)
                 .cleanDisabled(true)
@@ -33,7 +31,6 @@ public class FlywayInitializerCustom {
                 .load()
                 .migrate();
 
-        // А затем инициализируем все отложенные задачи
         scheduler.init();
     }
 
