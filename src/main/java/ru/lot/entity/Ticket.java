@@ -13,9 +13,7 @@ import ru.lot.enums.TicketStatus;
 @Setter
 @ToString
 @NoArgsConstructor
-public class Ticket {
-    @Id
-    private Long id;
+public class Ticket extends AbstractEntity<Long> implements Identifiable<Long> {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
