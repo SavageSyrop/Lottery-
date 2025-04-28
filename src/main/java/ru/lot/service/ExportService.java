@@ -2,6 +2,7 @@ package ru.lot.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.stream.JsonWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ public class ExportService {
     ) {
         this.drawService = drawService;
         this.ticketDao = ticketDao;
+        this.drawDao = drawDao;
     }
 
     public String getWinningTicketsInfoAsCSVString(Long drawId) {
@@ -63,7 +65,7 @@ public class ExportService {
 
     public String getDrawReportAsJson(Long drawId) throws JsonProcessingException {
         ExportServiceDrawReport exportServiceDrawReport = getDrawReport(drawId);
-        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectMapper objectMapper = new ObjectMapper().registerModule(new JavaTimeModule());
         return objectMapper.writeValueAsString(exportServiceDrawReport);
     }
 }

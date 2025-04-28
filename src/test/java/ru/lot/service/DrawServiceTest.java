@@ -15,10 +15,11 @@ import ru.lot.entity.DrawResult;
 import ru.lot.entity.LotteryType;
 import ru.lot.entity.Ticket;
 import ru.lot.enums.DrawStatus;
-import ru.lot.enums.LotteryName;
 import ru.lot.enums.TicketStatus;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +69,7 @@ public class DrawServiceTest {
 
         when(lotteryTypeDao.findByName(FIVE_OUT_OF_36)).thenReturn(Optional.of(lotteryType));
 
-        LocalDateTime startTime = LocalDateTime.now().plusDays(1);
+        Instant startTime = Instant.now().plus(1, ChronoUnit.DAYS);
         Draw savedDraw = new Draw();
         savedDraw.setId(1L);
         savedDraw.setLotteryType(lotteryType);
@@ -90,8 +91,8 @@ public class DrawServiceTest {
     public void testGetActiveDraws() {
         LotteryType lotteryOne = lotteryTypeDao.findByName(FIVE_OUT_OF_36).orElseThrow();
         LotteryType lotteryTwo = lotteryTypeDao.findByName(SIX_OUT_OF_45).orElseThrow();
-        Draw activeDraw1 = new Draw(1L, lotteryOne, LocalDateTime.now().plusHours(1), DrawStatus.ACTIVE);
-        Draw activeDraw2 = new Draw(2L, lotteryTwo, LocalDateTime.now().plusHours(2), DrawStatus.ACTIVE);
+        Draw activeDraw1 = new Draw(1L, lotteryOne, Instant.now().plus(1, ChronoUnit.HOURS), DrawStatus.ACTIVE);
+        Draw activeDraw2 = new Draw(2L, lotteryTwo, Instant.now().plus(2, ChronoUnit.HOURS), DrawStatus.ACTIVE);
         List<Draw> activeDraws = Arrays.asList(activeDraw1, activeDraw2);
         when(drawRepository.findByStatus(DrawStatus.ACTIVE)).thenReturn(activeDraws);
 
@@ -104,7 +105,7 @@ public class DrawServiceTest {
     @Test
     public void testCancelDraw_Success() {
         LotteryType lotteryOne = lotteryTypeDao.findByName(FIVE_OUT_OF_36).orElseThrow();
-        Draw draw = new Draw(1L, lotteryOne, LocalDateTime.now().plusHours(1), DrawStatus.PLANNED);
+        Draw draw = new Draw(1L, lotteryOne, Instant.now().plus(1, ChronoUnit.HOURS), DrawStatus.PLANNED);
 
         when(drawRepository.findById(1L)).thenReturn(Optional.of(draw));
         when(drawRepository.save(draw)).thenReturn(draw);
@@ -130,7 +131,7 @@ public class DrawServiceTest {
     @Test
     public void testGetCompletedDrawHistory() {
         LotteryType lotteryOne = lotteryTypeDao.findByName(FIVE_OUT_OF_36).orElseThrow();
-        Draw completedDraw = new Draw(1L, lotteryOne, LocalDateTime.now().minusDays(1), DrawStatus.COMPLETED);
+        Draw completedDraw = new Draw(1L, lotteryOne, Instant.now().minus(1, ChronoUnit.DAYS), DrawStatus.COMPLETED);
         List<Draw> completedDraws = List.of(completedDraw);
         when(drawRepository.findByStatus(DrawStatus.COMPLETED)).thenReturn(completedDraws);
 
@@ -144,8 +145,8 @@ public class DrawServiceTest {
     @Test
     public void testGetDrawResult_Success() {
         LotteryType lotteryOne = lotteryTypeDao.findByName(FIVE_OUT_OF_36).orElseThrow();
-        Draw draw = new Draw(1L, lotteryOne, LocalDateTime.now().plusHours(1), DrawStatus.COMPLETED);
-        DrawResult expectedResult = new DrawResult(1L, draw, "1,2,3,4,5", LocalDateTime.now());
+        Draw draw = new Draw(1L, lotteryOne, Instant.now().plus(1, ChronoUnit.HOURS), DrawStatus.COMPLETED);
+        DrawResult expectedResult = new DrawResult(1L, draw, "1,2,3,4,5", Instant.now());
         when(drawResultRepository.findByDrawId(1L)).thenReturn(expectedResult);
 
         DrawResult result = drawService.getDrawResult(1L);

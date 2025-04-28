@@ -8,7 +8,9 @@ import ru.lot.entity.Draw;
 import ru.lot.entity.DrawResult;
 import ru.lot.service.DrawService;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +32,9 @@ public class DrawController {
     public Draw createDraw(@RequestBody Map<String, String> request) {
         String lotteryType = request.get("lotteryType");
         String startTimeStr = request.get("startTime");
-        LocalDateTime startTime = LocalDateTime.parse(startTimeStr);
+        LocalDateTime time = LocalDateTime.parse(startTimeStr);
+
+        Instant startTime = time.atZone(ZoneId.of("Europe/Moscow")).toInstant();
         return drawService.createDraw(lotteryType, startTime);
     }
 

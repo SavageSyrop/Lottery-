@@ -23,7 +23,7 @@ import ru.lot.event.DrawCreatedEvent;
 import ru.lot.event.DrawEndedEvent;
 import ru.lot.event.DrawStartedEvent;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,7 +40,7 @@ public class DrawService {
     private final TicketDao ticketRepository;
 
     @Transactional
-    public Draw createDraw(String lottery, LocalDateTime startTime) {
+    public Draw createDraw(String lottery, Instant startTime) {
         log.info("Creating draw for lottery {} at {}", lottery, startTime);
 
         LotteryName lotteryName = LotteryName.fromLabel(lottery);
@@ -114,7 +114,7 @@ public class DrawService {
         int[] winningCombination = drawResultService.getWinningCombination(draw.getLotteryType().getName());
         String winningCombinationStr = drawResultService.winningCombinationToString(winningCombination, ",");
 
-        drawResultRepository.save(new DrawResult(draw, winningCombinationStr, LocalDateTime.now()));
+        drawResultRepository.save(new DrawResult(draw, winningCombinationStr, Instant.now()));
 
         drawResultService.markTicketsWinOrLose(drawId, winningCombinationStr);
 

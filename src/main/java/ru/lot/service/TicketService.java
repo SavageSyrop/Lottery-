@@ -175,4 +175,9 @@ public class TicketService {
             throw e;
         }
     }
+
+    public TicketStatus getTicketStatus(Long ticketId) {
+        Ticket ticket = ticketRepository.getReferenceById(ticketId);
+        return ticket.getStatus();
+    }
 }
