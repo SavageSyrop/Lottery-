@@ -25,6 +25,7 @@ import ru.lot.dto.TicketWithDrawDTO;
 import ru.lot.dto.UserDTO;
 import ru.lot.entity.Ticket;
 import ru.lot.entity.User;
+import ru.lot.enums.TicketStatus;
 import ru.lot.service.TicketService;
 
 @RestController
@@ -67,6 +68,11 @@ public class TicketController {
         
         Ticket ticket = ticketService.createTicket(userId, drawId, numbers);
         return convertToDTO(ticket);
+    }
+
+    @GetMapping("/{id}/check-result")
+    public TicketStatus getTicketResult(@PathVariable("id") Long ticketId) {
+        return ticketService.getTicketStatus(ticketId);
     }
 
     private TicketDTO convertToDTO(Ticket ticket) {

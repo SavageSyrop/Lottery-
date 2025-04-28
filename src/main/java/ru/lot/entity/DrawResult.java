@@ -5,11 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import ru.lot.converter.LocalDateTimeAttributeConverter;
-import ru.lot.converter.WinningCombinationConverter;
 
-import java.time.LocalDateTime;
-import java.util.List;
+import java.time.Instant;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -31,10 +28,9 @@ public class DrawResult extends AbstractEntity<Long> implements Identifiable<Lon
     private String winningCombination;
 
     @Column(name = "result_time", nullable = false)
-    @Convert(converter = LocalDateTimeAttributeConverter.class)
-    private LocalDateTime resultTime;
+    private Instant resultTime;
 
-    public DrawResult(Draw draw, String winningCombination, LocalDateTime resultTime) {
+    public DrawResult(Draw draw, String winningCombination, Instant resultTime) {
         this.draw = draw;
         this.winningCombination = winningCombination;
         this.resultTime = resultTime;

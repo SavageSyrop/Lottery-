@@ -2,7 +2,6 @@ package ru.lot.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -14,7 +13,7 @@ import ru.lot.event.DrawCreatedEvent;
 import ru.lot.event.DrawEndedEvent;
 import ru.lot.event.DrawStartedEvent;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +36,7 @@ public class DrawTaskSchedulerService {
     }
 
     public void init() {
-        var now = LocalDateTime.now();
+        Instant now = Instant.now();
         List<Draw> draws = drawDao.findByStatus(DrawStatus.PLANNED);
         for (Draw draw : draws) {
             if (draw.getStartTime().isAfter(now)) {

@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @NoArgsConstructor
@@ -13,5 +13,5 @@ public class DrawResultDTO {
     private Long id;
     private Long drawId;
     private String winningCombination;
-    private LocalDateTime resultTime;
+    private Instant resultTime;
 }

@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import ru.lot.entity.LotteryType;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @Getter
@@ -16,9 +16,9 @@ import java.util.List;
 public class ExportServiceDrawReport {
     private LotteryType lotteryType;
 
-    private LocalDateTime startTime;
+    private Instant startTime;
 
-    private LocalDateTime resultTime;
+    private Instant resultTime;
 
     private String winningCombination;
 

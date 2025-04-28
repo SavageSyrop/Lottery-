@@ -5,10 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import ru.lot.converter.LocalDateTimeAttributeConverter;
 import ru.lot.enums.DrawStatus;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 @EqualsAndHashCode(callSuper = true)
 @Entity
@@ -23,14 +23,13 @@ public class Draw extends AbstractEntity<Long> implements Identifiable<Long> {
     private LotteryType lotteryType;
 
     @Column(name = "start_time", nullable = false)
-    @Convert(converter = LocalDateTimeAttributeConverter.class)
-    private LocalDateTime startTime;
+    private Instant startTime;
 
     @Column
     @Enumerated(EnumType.STRING)
     private DrawStatus status;
 
-    public Draw(long id, LotteryType lotteryType, LocalDateTime startTime, DrawStatus drawStatus) {
+    public Draw(long id, LotteryType lotteryType, Instant startTime, DrawStatus drawStatus) {
         this.id = id;
         this.lotteryType = lotteryType;
         this.startTime = startTime;
@@ -47,7 +46,7 @@ public class Draw extends AbstractEntity<Long> implements Identifiable<Long> {
         return this.id;
     }
 
-    public LocalDateTime getEndTime() {
-        return startTime.plusMinutes(10);
+    public Instant getEndTime() {
+        return startTime.plus(10, ChronoUnit.MINUTES);
     }
 }

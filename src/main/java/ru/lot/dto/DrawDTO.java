@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import ru.lot.enums.DrawStatus;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Getter
 @NoArgsConstructor
@@ -13,6 +13,6 @@ import java.time.LocalDateTime;
 public class DrawDTO {
     private Long id;
     private String lotteryType;
-    private LocalDateTime startTime;
+    private Instant startTime;
     private DrawStatus status;
 }
