@@ -1,0 +1,693 @@
+{
+	"info": {
+		"_postman_id": "a245f360-38ca-4669-b388-ba201dda2607",
+		"name": "Lottery",
+		"description": "# 🚀 Get started here\n\nThis template guides you through CRUD operations (GET, POST, PUT, DELETE), variables, and tests.\n\n## 🔖 **How to use this template**\n\n#### **Step 1: Send requests**\n\nRESTful APIs allow you to perform CRUD operations using the POST, GET, PUT, and DELETE HTTP methods.\n\nThis collection contains each of these [request](https://learning.postman.com/docs/sending-requests/requests/) types. Open each request and click \"Send\" to see what happens.\n\n#### **Step 2: View responses**\n\nObserve the response tab for status code (200 OK), response time, and size.\n\n#### **Step 3: Send new Body data**\n\nUpdate or add new data in \"Body\" in the POST request. Typically, Body data is also used in PUT request.\n\n```\n{\n    \"name\": \"Add your name in the body\"\n}\n\n ```\n\n#### **Step 4: Update the variable**\n\nVariables enable you to store and reuse values in Postman. We have created a [variable](https://learning.postman.com/docs/sending-requests/variables/) called `base_url` with the sample request [https://postman-api-learner.glitch.me](https://postman-api-learner.glitch.me). Replace it with your API endpoint to customize this collection.\n\n#### **Step 5: Add tests in the \"Scripts\" tab**\n\nAdding tests to your requests can help you confirm that your API is working as expected. You can write test scripts in JavaScript and view the output in the \"Test Results\" tab.\n\n<img src=\"https://content.pstmn.io/fa30ea0a-373d-4545-a668-e7b283cca343/aW1hZ2UucG5n\" alt=\"\" height=\"1530\" width=\"2162\">\n\n## 💪 Pro tips\n\n- Use folders to group related requests and organize the collection.\n    \n- Add more [scripts](https://learning.postman.com/docs/writing-scripts/intro-to-scripts/) to verify if the API works as expected and execute workflows.\n    \n\n## 💡Related templates\n\n[API testing basics](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9a37a28-055b-49cd-8c7e-97494a21eb54&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[API documentation](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=e9c28f47-1253-44af-a2f3-20dce4da1f18&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)  \n[Authorization methods](https://go.postman.co/redirect/workspace?type=personal&collectionTemplateId=31a9a6ed-4cdf-4ced-984c-d12c9aec1c27&sourceTemplateId=ddb19591-3097-41cf-82af-c84273e56719)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33366567"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"fess.2002@mail.ru\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8089/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "Login ADMIN",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"vrcard@mail.ru\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8089/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"user",
+						"login"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"fess.2002@mail.ru\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8089/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Draw create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2cmNhcmRAbWFpbC5ydSIsImp0aSI6IjEiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4Njc0MTAsImV4cCI6MTc0NTg3MTAxMH0.XImeFW4lYR_SnW7kWXs9ljDsoCioAs0fNyaSTeSLa-i-GX_EhVsV2Yi-ONraZOvPL9pJab0e57oyMR7ITi2kZQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lotteryType\": \"5 из 36\",\r\n    \"startTime\": \"2025-04-28T23:15:30\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8089/api/admin/draws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"admin",
+						"draws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get active draws",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/draws/active",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"draws",
+						"active"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel draw",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ2cmNhcmRAbWFpbC5ydSIsImp0aSI6IjEiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NDc0NzgsImV4cCI6MTc0NTg1MTA3OH0.p6NHwq1lR2uw59h_pRxq5hNGht3uh7zrcfab4E0wUKB5VpfhEyDP7dnyPdlVFHfAVCEjIsyNvtngP81p4I1DOA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/admin/draws/2/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"admin",
+						"draws",
+						"2",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invoice",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXNzLjIwMDJAbWFpbC5ydSIsImp0aSI6IjIiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NDk1MTQsImV4cCI6MTc0NTg1MzExNH0.VtnQBYd9Np-pTWFjQDV7432JVv6wkRp31AvvDm97RvBsHvAPzqMUuUfV1CSy5vop0vBLQZkzRd5yGnI5ueTVUA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"drawId\": 3,\r\n    \"numbers\": [1,2,3,4,5]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8089/api/invoice",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"invoice"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Payments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXNzLjIwMDJAbWFpbC5ydSIsImp0aSI6IjIiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NjA2NTEsImV4cCI6MTc0NTg2NDI1MX0.a-v5g1bZLDnu_bfiGb0Wt9iseJIUYOEOLY63rqc3j5zGwgAEBmEYdTMOSCyCyK9_esZ3YdhOllGNAdJdQoyTEQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/payments?invoiceId=1&cvc=123&cardNumber=123&amount=99",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"payments"
+					],
+					"query": [
+						{
+							"key": "invoiceId",
+							"value": "1"
+						},
+						{
+							"key": "cvc",
+							"value": "123"
+						},
+						{
+							"key": "cardNumber",
+							"value": "123"
+						},
+						{
+							"key": "amount",
+							"value": "99"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Payments Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXNzLjIwMDJAbWFpbC5ydSIsImp0aSI6IjIiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NjA2NTEsImV4cCI6MTc0NTg2NDI1MX0.a-v5g1bZLDnu_bfiGb0Wt9iseJIUYOEOLY63rqc3j5zGwgAEBmEYdTMOSCyCyK9_esZ3YdhOllGNAdJdQoyTEQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/payments?invoiceId=1&cvc=123&cardNumber=123&amount=99",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"payments"
+					],
+					"query": [
+						{
+							"key": "invoiceId",
+							"value": "1"
+						},
+						{
+							"key": "cvc",
+							"value": "123"
+						},
+						{
+							"key": "cardNumber",
+							"value": "123"
+						},
+						{
+							"key": "amount",
+							"value": "99"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All My Tickets",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXNzLjIwMDJAbWFpbC5ydSIsImp0aSI6IjIiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NjA2NTEsImV4cCI6MTc0NTg2NDI1MX0.a-v5g1bZLDnu_bfiGb0Wt9iseJIUYOEOLY63rqc3j5zGwgAEBmEYdTMOSCyCyK9_esZ3YdhOllGNAdJdQoyTEQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/tickets",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"tickets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTicketById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXNzLjIwMDJAbWFpbC5ydSIsImp0aSI6IjIiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NjA2NTEsImV4cCI6MTc0NTg2NDI1MX0.a-v5g1bZLDnu_bfiGb0Wt9iseJIUYOEOLY63rqc3j5zGwgAEBmEYdTMOSCyCyK9_esZ3YdhOllGNAdJdQoyTEQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/tickets/8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"tickets",
+						"8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetDrawResult",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXNzLjIwMDJAbWFpbC5ydSIsImp0aSI6IjIiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NjQzMzAsImV4cCI6MTc0NTg2NzkzMH0.--x9TFsxHdtWBccg4VR4wYxA2uw7dfNHEbVHKeIaDapRW9SDYtpxQzfmK3EqOw6-hRc0-SRjzqTBKH3_n6Pq5Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/draws/3/results",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"draws",
+						"3",
+						"results"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetTicketResult",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXNzLjIwMDJAbWFpbC5ydSIsImp0aSI6IjIiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NjQzMzAsImV4cCI6MTc0NTg2NzkzMH0.--x9TFsxHdtWBccg4VR4wYxA2uw7dfNHEbVHKeIaDapRW9SDYtpxQzfmK3EqOw6-hRc0-SRjzqTBKH3_n6Pq5Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/tickets/8/check-result",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"tickets",
+						"8",
+						"check-result"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReportJson",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXNzLjIwMDJAbWFpbC5ydSIsImp0aSI6IjIiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NjQzMzAsImV4cCI6MTc0NTg2NzkzMH0.--x9TFsxHdtWBccg4VR4wYxA2uw7dfNHEbVHKeIaDapRW9SDYtpxQzfmK3EqOw6-hRc0-SRjzqTBKH3_n6Pq5Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/draws/3/results/report",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"draws",
+						"3",
+						"results",
+						"report"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReportJson Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXNzLjIwMDJAbWFpbC5ydSIsImp0aSI6IjIiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NjQzMzAsImV4cCI6MTc0NTg2NzkzMH0.--x9TFsxHdtWBccg4VR4wYxA2uw7dfNHEbVHKeIaDapRW9SDYtpxQzfmK3EqOw6-hRc0-SRjzqTBKH3_n6Pq5Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/draws/3/results/report",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"draws",
+						"3",
+						"results",
+						"report"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReportCSV",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJmZXNzLjIwMDJAbWFpbC5ydSIsImp0aSI6IjIiLCJzY29wZSI6IjVlODg0ODk4ZGEyODA0NzE1MWQwZTU2ZjhkYzYyOTI3NzM2MDNkMGQ2YWFiYmRkNjJhMTFlZjcyMWQxNTQyZDgiLCJpYXQiOjE3NDU4NjQzMzAsImV4cCI6MTc0NTg2NzkzMH0.--x9TFsxHdtWBccg4VR4wYxA2uw7dfNHEbVHKeIaDapRW9SDYtpxQzfmK3EqOw6-hRc0-SRjzqTBKH3_n6Pq5Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://localhost:8089/api/draws/3/results/csv",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8089",
+					"path": [
+						"api",
+						"draws",
+						"3",
+						"results",
+						"csv"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
