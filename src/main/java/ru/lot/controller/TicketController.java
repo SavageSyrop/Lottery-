@@ -24,6 +24,7 @@ import ru.lot.dto.TicketDTO;
 import ru.lot.dto.TicketWithDrawDTO;
 import ru.lot.dto.UserDTO;
 import ru.lot.entity.Ticket;
+import ru.lot.entity.User;
 import ru.lot.service.TicketService;
 
 @RestController
@@ -37,7 +38,7 @@ public class TicketController {
     @GetMapping("/{id}")
     @PreAuthorize("hasAuthority('USER')")
     public TicketDTO getTicket(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
-        Long userId = Long.parseLong(userDetails.getUsername());
+        Long userId = ((User) userDetails).getId();
         Ticket ticket = ticketService.getTicketForUser(id, userId);
         return convertToDTO(ticket);
     }
@@ -45,7 +46,7 @@ public class TicketController {
     @GetMapping
     @PreAuthorize("hasAuthority('USER')")
     public List<TicketWithDrawDTO> getUserTickets(@AuthenticationPrincipal UserDetails userDetails) {
-        Long userId = Long.parseLong(userDetails.getUsername());
+        Long userId = ((User) userDetails).getId();
         List<Ticket> tickets = ticketService.getUserTickets(userId);
         return tickets.stream()
                 .map(this::convertToWithDrawDTO)
@@ -78,8 +79,6 @@ public class TicketController {
 
     private TicketWithDrawDTO convertToWithDrawDTO(Ticket ticket) {
         TicketWithDrawDTO dto = modelMapper.map(ticket, TicketWithDrawDTO.class);
-        dto.setUser(modelMapper.map(ticket.getUser(), UserDTO.class));
-        dto.setDraw(modelMapper.map(ticket.getDraw(), DrawDTO.class));
         dto.setNumbers(ticketConverter.convertToNumbers(ticket.getPickedNumbers()));
         return dto;
     }

@@ -19,5 +19,4 @@ public class TicketDTO {
     private Long drawId;
     private List<Integer> numbers;
     private TicketStatus status;
-    private LocalDateTime createdAt;
 }

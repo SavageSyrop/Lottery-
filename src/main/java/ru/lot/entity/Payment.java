@@ -22,7 +22,8 @@ public class Payment extends AbstractEntity<Long> implements Identifiable<Long> 
     @Column
     private Double amount;
     @Column
+    @Enumerated(EnumType.STRING)
     private PaymentStatus status;
     @Column
-    private Instant registerTime;
+    private Instant paymentTime;
 }

@@ -44,7 +44,7 @@ public class PaymentServiceImpl implements PaymentService {
         }
         Payment payment = new Payment();
         payment.setAmount(amount);
-        payment.setRegisterTime(Instant.now());
+        payment.setPaymentTime(Instant.now());
         payment.setInvoice(invoice);
         if (cardNumber.equals("123") || new Random().nextInt(5) < 4) {
             payment.setStatus(PaymentStatus.SUCCESS);

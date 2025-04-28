@@ -15,9 +15,8 @@ import ru.lot.enums.TicketStatus;
 @AllArgsConstructor
 public class TicketWithDrawDTO {
     private Long id;
-    private UserDTO user;
-    private DrawDTO draw;
+    private Long userId;
+    private Long drawId;
     private List<Integer> numbers;
     private TicketStatus status;
-    private LocalDateTime createdAt;
 }

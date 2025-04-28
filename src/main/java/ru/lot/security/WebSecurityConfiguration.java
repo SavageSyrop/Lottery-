@@ -81,7 +81,7 @@ public class WebSecurityConfiguration {
                                                     .write(exception.getMessage());
                                         }))
                 .authorizeHttpRequests(configurer ->
-                        configurer.requestMatchers("/", "/draws/history", "/draws/{id}/results", "/draws/active",
+                        configurer.requestMatchers("/", "/api/draws/history", "/api/draws/{id}/results", "/api/draws/active",
                                         "/user/**").permitAll()
                                 .anyRequest().authenticated()
                 )
