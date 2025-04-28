@@ -28,6 +28,7 @@ public class ExportService {
                          DrawDao drawDao,
                          TicketDao ticketDao
     ) {
+        this.drawDao = drawDao;
         this.drawService = drawService;
         this.ticketDao = ticketDao;
         this.drawDao = drawDao;
@@ -37,10 +38,10 @@ public class ExportService {
         List<Ticket> winningTickets = ticketDao.findByDrawIdAndStatus(drawId, TicketStatus.WIN);
         StringBuilder csvStringBuilder = new StringBuilder();
 
-        csvStringBuilder.append("Ticket Id, Status%n");
+        csvStringBuilder.append("Ticket Id, Status\n");
 
         winningTickets.forEach(ticket -> {
-            csvStringBuilder.append(String.format("%s,%s%n", ticket.getId(), ticket.getStatus()));
+            csvStringBuilder.append(String.format("%s,%s\n", ticket.getId(), ticket.getStatus()));
         });
 
         return csvStringBuilder.toString();
