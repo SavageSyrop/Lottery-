@@ -8,6 +8,7 @@ services:
       - db
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/lotData
+      SPRING_DATASOURCE_USERNAME: lotadmin
       FLYWAY_URL: jdbc:postgresql://db:5432/lotData
   db:
     image: postgres

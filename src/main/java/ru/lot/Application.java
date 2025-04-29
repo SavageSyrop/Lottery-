@@ -8,6 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import ru.lot.configuration.FlywayInitializerCustom;
+import ru.lot.service.DrawTaskSchedulerService;
 
 @Slf4j
 @SpringBootApplication(scanBasePackages = "ru.lot")
@@ -20,5 +21,6 @@ public class Application {
 
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
         context.getBean(FlywayInitializerCustom.class).initialize();
+        context.getBean(DrawTaskSchedulerService.class).init();
     }
 }

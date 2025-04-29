@@ -17,10 +17,10 @@ public class FlywayInitializerCustom {
     @Value("${flyway.password}")
     private String password;
 
-    private final DrawTaskSchedulerService scheduler;
+//    private final DrawTaskSchedulerService scheduler;
 
-    public FlywayInitializerCustom(DrawTaskSchedulerService scheduler) {
-        this.scheduler = scheduler;
+    public FlywayInitializerCustom() {
+//        this.scheduler = scheduler;
     }
 
     public void initialize() {
@@ -31,7 +31,7 @@ public class FlywayInitializerCustom {
                 .load()
                 .migrate();
 
-        scheduler.init();
+//        scheduler.init();
     }
 
     @Bean
