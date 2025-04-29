@@ -7,18 +7,20 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import ru.lot.configuration.FlywayInitializer;
+import ru.lot.configuration.FlywayInitializerCustom;
+import ru.lot.service.DrawTaskSchedulerService;
 
 @Slf4j
 @SpringBootApplication(scanBasePackages = "ru.lot")
 @EnableTransactionManagement
-@EnableJpaRepositories("ru.lot")
+@EnableJpaRepositories("ru.lot.dao")
 public class Application {
     public static void main(String[] args) {
 
         log.info("Application stated!");
 
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
-        context.getBean(FlywayInitializer.class).initialize();
+        context.getBean(FlywayInitializerCustom.class).initialize();
+        context.getBean(DrawTaskSchedulerService.class).init();
     }
 }
