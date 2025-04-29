@@ -47,6 +47,6 @@ public class Draw extends AbstractEntity<Long> implements Identifiable<Long> {
     }
 
     public Instant getEndTime() {
-        return startTime.plus(10, ChronoUnit.MINUTES);
+        return startTime.plus(1, ChronoUnit.MINUTES);
     }
 }
