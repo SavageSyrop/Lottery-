@@ -39,11 +39,21 @@ public class DrawTaskSchedulerService {
         Instant now = Instant.now();
         List<Draw> draws = drawDao.findByStatus(DrawStatus.PLANNED);
         for (Draw draw : draws) {
-            if (draw.getStartTime().isAfter(now)) {
+            Instant start = draw.getStartTime();
+            Instant end   = draw.getEndTime();
+
+            if (start.isAfter(now)) {
                 scheduleStartTask(draw);
+            } else {
+                log.info("Missed start for draw {}, triggering start immediately", draw.getId());
+                eventPublisher.publishEvent(new DrawStartedEvent(draw.getId()));
             }
-            if (draw.getEndTime().isAfter(now)) {
+
+            if (end.isAfter(now)) {
                 scheduleEndTask(draw);
+            } else {
+                log.info("Missed end for draw {}, triggering end immediately", draw.getId());
+                eventPublisher.publishEvent(new DrawEndedEvent(draw.getId()));
             }
         }
     }
